@@ -24,9 +24,8 @@ public class SplashItemFragment extends Fragment {
   private static final String ARG_PARAM2 = "param2";
 
   // TODO: Rename and change types of parameters
-  private int mParam1;
+  private String mParam1;
   private String mParam2;
-
 
   public SplashItemFragment() {
     // Required empty public constructor
@@ -45,7 +44,7 @@ public class SplashItemFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
-      mParam1 = getArguments().getInt(ARG_PARAM1);
+      mParam1 = getArguments().getString(ARG_PARAM1);
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
   }
@@ -57,4 +56,10 @@ public class SplashItemFragment extends Fragment {
     return inflater.inflate(R.layout.fragment_splash_item, container, false);
   }
 
+  @Override
+  public void onResume() {
+    super.onResume();
+
+
+  }
 }
