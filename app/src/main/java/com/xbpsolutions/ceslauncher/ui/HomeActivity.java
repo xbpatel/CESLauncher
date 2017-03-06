@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView.IconTabProvider;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
@@ -39,6 +40,12 @@ public class HomeActivity extends AppCompatActivity {
     View v = inflator.inflate(R.layout.custom_ab, null);
     tabBarView = (TabBarView) v.findViewById(R.id.tab_bar);
 
+    ArrayList<String> colors = new ArrayList<>();
+    colors.add("#C1FD33");
+    colors.add("#FF9933");
+    colors.add("#0DD5FC");
+    tabBarView.setStripColors(colors);
+
     getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
     getSupportActionBar().setCustomView(v);
     getSupportActionBar().setElevation(0f);
@@ -56,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
 
   public class SectionsPagerAdapter extends FragmentPagerAdapter implements IconTabProvider {
 
-    private int[] tab_icons = {R.drawable.ic_action_home,
+    private int[] tab_icons = {R.drawable.ic_action_apps,
         R.drawable.ic_action_call,
         R.drawable.ic_action_message,
     };

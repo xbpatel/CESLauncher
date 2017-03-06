@@ -16,6 +16,7 @@ public class TabView extends LinearLayout {
   private ImageView mImageView;
   private TextView mTextView;
 
+
   public TabView(Context context) {
     this(context, null);
   }
