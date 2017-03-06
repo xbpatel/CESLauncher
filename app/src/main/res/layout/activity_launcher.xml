@@ -1,11 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@color/colorPrimary"
   tools:context="com.xbpsolutions.ceslauncher.ui.LauncherActivity">
 
+  <LinearLayout
+    android:id="@+id/introTop"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:gravity="center"
+    android:orientation="vertical">
+    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:layout_centerHorizontal="true"
+      android:gravity="center"
+      android:text="Introducing"
+      android:textColor="#fff"
+      android:textSize="48sp"
+      app:ftype="black" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="C"
+        android:textColor="@color/neon_cyan"
+        android:textSize="32sp"
+        app:ftype="bold" />
+
+      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="E"
+        android:textColor="@color/neon_orange"
+        android:textSize="32sp"
+        app:ftype="bold" />
+
+      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="S"
+        android:textColor="@color/neon_yellow"
+        android:textSize="32sp"
+        app:ftype="bold" />
+
+      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Launcher"
+        android:textColor="#fff"
+        android:textSize="32sp"
+        app:ftype="bold" />
+
+    </LinearLayout>
+  </LinearLayout>
+  <LinearLayout
+    android:id="@+id/introBottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal">
+
+    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1.5"
+      android:padding="16dp"
+      android:background="@color/neon_orange"
+      android:gravity="center"
+      android:text="LATER"
+      android:textColor="#000"
+      android:textSize="22sp"
+      app:ftype="bold" />
+
+    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:padding="16dp"
+      android:background="@color/neon_cyan"
+      android:gravity="center"
+      android:text="GET STARTED"
+      android:textColor="#000"
+      android:textSize="22sp"
+      app:ftype="bold" />
+
+  </LinearLayout>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/introBottom"
+    android:layout_below="@id/introTop">
 
 
-</android.support.constraint.ConstraintLayout>
+
+  </FrameLayout>
+
+</RelativeLayout>
