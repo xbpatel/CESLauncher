@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView.IconTabProvider;
-import com.xbpsolutions.ceslauncher.ui.home.AppsGridFragment;
-import com.xbpsolutions.ceslauncher.ui.home.RealAppsFragment;
+import com.xbpsolutions.ceslauncher.ui.home.MovieFragment;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -82,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
       // below).
 
       if(position == 0){
-        return new AppsGridFragment();
+        return new MovieFragment();
       }else{
         return PlaceholderFragment.newInstance(position + 1);
       }
