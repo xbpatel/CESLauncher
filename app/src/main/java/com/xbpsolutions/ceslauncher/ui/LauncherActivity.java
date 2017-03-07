@@ -40,6 +40,8 @@ public class LauncherActivity extends AppCompatActivity {
         item1.color = getResources().getColor(R.color.neon_orange);
         item1.title = "Keys";
 
+
+
         IntroItem item2 = new IntroItem();
         item2.color = getResources().getColor(R.color.neon_pink);
         item2.title = "Keys";
