@@ -16,6 +16,7 @@ import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView.IconTabProvider;
 import com.xbpsolutions.ceslauncher.ui.home.AppsGridFragment;
+import com.xbpsolutions.ceslauncher.ui.home.RealAppsFragment;
 import java.util.ArrayList;
 import java.util.Locale;
 
