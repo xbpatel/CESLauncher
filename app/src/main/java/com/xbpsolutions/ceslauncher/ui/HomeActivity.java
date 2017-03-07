@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView.IconTabProvider;
+import com.xbpsolutions.ceslauncher.ui.home.AppsGridFragment;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -78,7 +79,14 @@ public class HomeActivity extends AppCompatActivity {
       // getItem is called to instantiate the fragment for the given page.
       // Return a PlaceholderFragment (defined as a static inner class
       // below).
-      return PlaceholderFragment.newInstance(position + 1);
+
+      if(position == 0){
+        return new AppsGridFragment();
+      }else{
+        return PlaceholderFragment.newInstance(position + 1);
+      }
+
+     // return AppsGridFragment.instantiate(Homthis,"");
     }
 
     @Override
@@ -143,5 +151,9 @@ public class HomeActivity extends AppCompatActivity {
           ARG_SECTION_NUMBER)));
       return rootView;
     }
+  }
+
+  @Override
+  public void onBackPressed() {
   }
 }
