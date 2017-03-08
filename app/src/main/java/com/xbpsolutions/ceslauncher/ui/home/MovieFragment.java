@@ -1,5 +1,6 @@
 package com.xbpsolutions.ceslauncher.ui.home;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
-import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +38,7 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
   private RecyclerView recyclerView;
   private BaseMovieAdapter sectionedRecyclerAdapter;
   private boolean isDragStarted = false;
-  private LinearLayout linearBottomUninstall;
+  private LinearLayout linearBottomUninstall, linearBottomAppInfo, linearBottomOptions;
   private TfTextView txtUninstall;
 
   @Nullable
@@ -55,9 +55,12 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
     recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     linearBottomUninstall = (LinearLayout) view.findViewById(R.id.linearBottomUninstall);
+    linearBottomAppInfo = (LinearLayout) view.findViewById(R.id.linearBottomAppInfo);
+    linearBottomOptions = (LinearLayout) view.findViewById(R.id.linearBottomOptions);
+
     txtUninstall = (TfTextView) view.findViewById(R.id.txtUninstall);
-    linearBottomUninstall.setVisibility(View.GONE);
-    linearBottomUninstall.setOnDragListener(new MyDragListener());
+    linearBottomUninstall.setOnDragListener(new MyUnInstallDragListener());
+    linearBottomAppInfo.setOnDragListener(new MyAppinfoDragListener());
   }
 
   @Override
@@ -89,13 +92,35 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
   public void onItemClicked(int adapterPosition, int positionInCollection) {
 
     AppModel app = movieList.get(positionInCollection);
-    if (app != null) {
-      Intent intent = getActivity().getPackageManager()
-          .getLaunchIntentForPackage(app.getApplicationPackageName());
+    openApp(app.getApplicationPackageName());
 
-      if (intent != null) {
-        startActivity(intent);
-      }
+  }
+
+
+  private void openApp(String mPackage) {
+    Intent intent = getActivity().getPackageManager()
+        .getLaunchIntentForPackage(mPackage);
+
+    if (intent != null) {
+      startActivity(intent);
+    }
+  }
+
+  private void openAppInfo(String mPackage) {
+
+    try {
+      //Open the specific App Info page:
+      Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+      intent.setData(Uri.parse("package:" + mPackage));
+      startActivity(intent);
+
+    } catch (ActivityNotFoundException e) {
+      //e.printStackTrace();
+
+      //Open the generic Apps page:
+      Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+      startActivity(intent);
+
     }
   }
 
@@ -107,7 +132,13 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
     DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
         view);
     view.startDrag(data, shadowBuilder, view, 0);
-    linearBottomUninstall.setVisibility(View.VISIBLE);
+    linearBottomOptions.setVisibility(View.VISIBLE);
+
+    if (app.isSystemApp()) {
+      linearBottomUninstall.setVisibility(View.GONE);
+    } else {
+      linearBottomUninstall.setVisibility(View.VISIBLE);
+    }
 
 
   }
@@ -138,8 +169,7 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
 
   }
 
-  class MyDragListener implements OnDragListener {
-
+  class MyUnInstallDragListener implements OnDragListener {
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
@@ -147,16 +177,17 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
       switch (event.getAction()) {
         case DragEvent.ACTION_DRAG_STARTED:
 
-
           // do nothing
           break;
         case DragEvent.ACTION_DRAG_ENTERED:
 
-          linearBottomUninstall.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.darkRed));
+          linearBottomUninstall
+              .setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.darkRed));
           // v.setBackgroundDrawable(enterShape);
           break;
         case DragEvent.ACTION_DRAG_EXITED:
-          linearBottomUninstall.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.lightRed));
+          linearBottomUninstall
+              .setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.lightRed));
           //  v.setBackgroundDrawable(normalShape);
           break;
         case DragEvent.ACTION_DROP:
@@ -168,7 +199,48 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
 
           break;
         case DragEvent.ACTION_DRAG_ENDED:
-          linearBottomUninstall.setVisibility(View.GONE);
+          linearBottomOptions.setVisibility(View.GONE);
+          // v.setBackgroundDrawable(normalShape);
+        default:
+          break;
+      }
+      return true;
+    }
+  }
+
+  class MyAppinfoDragListener implements OnDragListener {
+
+    @Override
+    public boolean onDrag(View v, DragEvent event) {
+      int action = event.getAction();
+      switch (event.getAction()) {
+        case DragEvent.ACTION_DRAG_STARTED:
+
+          // do nothing
+          break;
+        case DragEvent.ACTION_DRAG_ENTERED:
+
+          linearBottomAppInfo
+              .setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.darkRed));
+          // v.setBackgroundDrawable(enterShape);
+          break;
+        case DragEvent.ACTION_DRAG_EXITED:
+          linearBottomAppInfo
+              .setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.lightRed));
+          //  v.setBackgroundDrawable(normalShape);
+          break;
+        case DragEvent.ACTION_DROP:
+
+          ClipData.Item item = event.getClipData().getItemAt(0);
+
+          String mpackage = item.coerceToText(getActivity()).toString();
+          openAppInfo(mpackage);
+
+          break;
+        case DragEvent.ACTION_DRAG_ENDED:
+          linearBottomAppInfo
+              .setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.lightRed));
+          linearBottomOptions.setVisibility(View.GONE);
           // v.setBackgroundDrawable(normalShape);
         default:
           break;

@@ -11,27 +11,64 @@
     android:scrollbars="vertical" />
 
   <LinearLayout
-    android:id="@+id/linearBottomUninstall"
+    android:id="@+id/linearBottomOptions"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:layout_alignParentBottom="true"
     android:background="@color/lightRed"
     android:gravity="center"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:visibility="gone">
 
-    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
-      android:id="@+id/txtUninstall"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:drawableLeft="@drawable/ic_action_delete"
+    <LinearLayout
+      android:id="@+id/linearBottomAppInfo"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:layout_weight="1"
+      android:layout_alignParentBottom="true"
+      android:background="@color/lightRed"
       android:gravity="center"
-      android:text=""
-      android:textColor="#fff"
-      android:textSize="22sp"
-      app:ftype="black" />
+      android:orientation="horizontal"
+      android:visibility="visible">
+      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+        android:id="@+id/txtAppInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_info_outline"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="APP INFO"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:ftype="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/linearBottomUninstall"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:layout_weight="1"
+      android:layout_alignParentBottom="true"
+      android:background="@color/lightRed"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:visibility="visible">
+
+
+      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+        android:id="@+id/txtUninstall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_delete"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="UNINSTALL"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:ftype="bold" />
+    </LinearLayout>
+
 
   </LinearLayout>
-
 
 </RelativeLayout>
