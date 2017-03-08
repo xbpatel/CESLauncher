@@ -12,4 +12,7 @@
   <color name="neon_pink">#FC5AB8</color>
   <color name="neon_cyan">#0DD5FC</color>
 
+  <color name="lightRed">#EF5350</color>
+  <color name="darkRed">#C62828</color>
+
 </resources>

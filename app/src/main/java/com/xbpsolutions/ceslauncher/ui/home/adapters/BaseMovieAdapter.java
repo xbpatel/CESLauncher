@@ -24,6 +24,7 @@ public abstract class BaseMovieAdapter extends SectionedRecyclerAdapter<BaseMovi
 
     public interface OnItemClickListener {
         void onItemClicked(int adapterPosition, int positionInCollection);
+        void onItemLongPressed(View view,int adapterPosition, int positionInCollection);
     }
 
     protected List<AppModel> movieList;

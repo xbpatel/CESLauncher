@@ -2,6 +2,7 @@ package com.xbpsolutions.ceslauncher.ui.home.adapters;
 
 import android.view.View;
 
+import android.view.View.OnLongClickListener;
 import com.xbpsolutions.ceslauncher.ui.home.AppModel;
 
 import java.util.List;
@@ -38,6 +39,15 @@ public class MovieAdapterByName extends BaseMovieAdapter {
             @Override
             public void onClick(View v) {
                 onItemClickListener.onItemClicked(holder.getAdapterPosition(), position);
+            }
+        });
+
+
+        holder.itemView.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                onItemClickListener.onItemLongPressed(holder.itemView,holder.getAdapterPosition(), position);
+                return true;
             }
         });
     }
