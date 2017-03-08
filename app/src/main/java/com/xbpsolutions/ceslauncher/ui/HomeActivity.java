@@ -8,15 +8,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView.IconTabProvider;
 import com.xbpsolutions.ceslauncher.ui.home.MovieFragment;
-
+import com.xbpsolutions.ceslauncher.ui.settings.SettingsFragment;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -46,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     colors.add("#C1FD33");
     colors.add("#FF9933");
     colors.add("#0DD5FC");
+    colors.add("#F3F315");
     tabBarView.setStripColors(colors);
 
     getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -67,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private int[] tab_icons = {R.drawable.ic_action_apps,
         R.drawable.ic_action_call,
-        R.drawable.ic_action_message,
+        R.drawable.ic_action_message,R.drawable.ic_action_settings
     };
 
 
@@ -81,13 +84,16 @@ public class HomeActivity extends AppCompatActivity {
       // Return a PlaceholderFragment (defined as a static inner class
       // below).
 
-      if(position == 0){
-        return new MovieFragment();
-      }else{
-        return PlaceholderFragment.newInstance(position + 1);
+      switch (position) {
+        case 0:
+          return new MovieFragment();
+        case 3:
+          return new SettingsFragment();
+        default:
+          return PlaceholderFragment.newInstance(position + 1);
       }
 
-     // return AppsGridFragment.instantiate(Homthis,"");
+      // return AppsGridFragment.instantiate(Homthis,"");
     }
 
     @Override
@@ -111,6 +117,8 @@ public class HomeActivity extends AppCompatActivity {
           return getString(R.string.title_section2).toUpperCase(l);
         case 2:
           return getString(R.string.title_section3).toUpperCase(l);
+        case 3:
+          return getString(R.string.title_section4).toUpperCase(l);
       }
       return null;
     }
@@ -156,5 +164,17 @@ public class HomeActivity extends AppCompatActivity {
 
   @Override
   public void onBackPressed() {
+  }
+
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+    switch (keyCode){
+      case KeyEvent.KEYCODE_HOME:
+        Toast.makeText(this, "Home Pressed", Toast.LENGTH_SHORT).show();
+        break;
+    }
+
+    return true;
   }
 }
