@@ -1,7 +1,13 @@
 package com.xbpsolutions.ceslauncher.ui;
 
+import static com.xbpsolutions.ceslauncher.helper.PrefUtils.getSelectedColor;
+
 import android.app.ActionBar;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +18,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.xbpsolutions.ceslauncher.R;
@@ -45,12 +53,15 @@ public class HomeActivity extends AppCompatActivity {
     tabBarView = (TabBarView) v.findViewById(R.id.tab_bar);
 
     ArrayList<String> colors = new ArrayList<>();
-    colors.add("#C1FD33");
-    colors.add("#FF9933");
-    colors.add("#0DD5FC");
-    colors.add("#F3F315");
+//    colors.add("#C1FD33");
+//    colors.add("#FF9933");
+//    colors.add("#0DD5FC");
+//    colors.add("#F3F315");
+    colors.add("#ffffff");
+    colors.add("#ffffff");
+    colors.add("#ffffff");
+    colors.add("#ffffff");
     tabBarView.setStripColors(colors);
-
     getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
     getSupportActionBar().setCustomView(v);
     getSupportActionBar().setElevation(0f);
@@ -65,12 +76,31 @@ public class HomeActivity extends AppCompatActivity {
     tabBarView.setViewPager(mViewPager);
   }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    setThemeColor();
+  }
+
+  public void setThemeColor() {
+    String color = getSelectedColor(HomeActivity.this);
+    mViewPager.setBackgroundColor(Color.parseColor(color));
+    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
+
+    if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+      Window window = getWindow();
+      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+      window.setStatusBarColor(Color.parseColor(color));
+    }
+
+  }
 
   public class SectionsPagerAdapter extends FragmentPagerAdapter implements IconTabProvider {
 
     private int[] tab_icons = {R.drawable.ic_action_apps,
         R.drawable.ic_action_call,
-        R.drawable.ic_action_message,R.drawable.ic_action_settings
+        R.drawable.ic_action_message, R.drawable.ic_action_settings
     };
 
 
@@ -101,6 +131,7 @@ public class HomeActivity extends AppCompatActivity {
       // Show 3 total pages.
       return tab_icons.length;
     }
+
 
     @Override
     public int getPageIconResId(int position) {
@@ -169,7 +200,7 @@ public class HomeActivity extends AppCompatActivity {
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-    switch (keyCode){
+    switch (keyCode) {
       case KeyEvent.KEYCODE_HOME:
         Toast.makeText(this, "Home Pressed", Toast.LENGTH_SHORT).show();
         break;

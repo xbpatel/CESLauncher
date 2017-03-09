@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.helper.HomeManager;
+import com.xbpsolutions.ceslauncher.helper.PrefUtils;
 import com.xbpsolutions.ceslauncher.ui.splash.IntroItem;
 import com.xbpsolutions.ceslauncher.ui.splash.SplashFragmentPagerAdapter;
 import com.xbpsolutions.ceslauncher.ui.widgets.EnchantedViewPager;
@@ -37,7 +38,8 @@ public class LauncherActivity extends AppCompatActivity {
     btnTryCes = (TfTextView) findViewById(R.id.btnTryCES);
     btnTryCes.setText("NEXT");
     btnTryCes.setOnClickListener(btnTryClickListner);
-
+    // set first time color
+    PrefUtils.setSelectedColor(this, getResources().getStringArray(R.array.mdcolor_900)[7]);
     PackageManager pm = getPackageManager();
     ActivityManager am = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
     mHManager = new HomeManager(pm, am);

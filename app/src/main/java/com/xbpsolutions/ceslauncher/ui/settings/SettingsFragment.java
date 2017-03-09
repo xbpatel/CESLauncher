@@ -1,13 +1,23 @@
 package com.xbpsolutions.ceslauncher.ui.settings;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-
+import android.widget.RelativeLayout;
 import com.xbpsolutions.ceslauncher.R;
+import com.xbpsolutions.ceslauncher.helper.PrefUtils;
+import com.xbpsolutions.ceslauncher.ui.HomeActivity;
+import com.xbpsolutions.ceslauncher.ui.widgets.ColorBox;
+import com.xbpsolutions.ceslauncher.ui.widgets.ColorChooser;
+import com.xbpsolutions.ceslauncher.ui.widgets.ColorChooser.OnBoxClickListner;
+import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +34,11 @@ public class SettingsFragment extends Fragment {
   // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
+
+  private TfTextView txtTitleChooseTheme;
+  private ColorBox colorBoxChoosenTheme;
+  private ColorChooser colorChooser;
+  private RelativeLayout relativeChooseTheme;
 
 
   public SettingsFragment() {
@@ -63,5 +78,84 @@ public class SettingsFragment extends Fragment {
     // Inflate the layout for this fragment
     return inflater.inflate(R.layout.fragment_settings, container, false);
   }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    colorBoxChoosenTheme.setCurrentColor(PrefUtils.getSelectedColor(getActivity()));
+    colorBoxChoosenTheme.setup();
+  }
+
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    colorBoxChoosenTheme = (ColorBox) view.findViewById(R.id.colorBoxChoosenTheme);
+    colorChooser = (ColorChooser) view.findViewById(R.id.colorChooser);
+    txtTitleChooseTheme = (TfTextView) view.findViewById(R.id.txtTitleChooseTheme);
+    relativeChooseTheme = (RelativeLayout) view.findViewById(R.id.relativeChooseTheme);
+    relativeChooseTheme.setOnClickListener(chooseThemeClickListner);
+
+
+    colorChooser.setClickListner(new OnBoxClickListner() {
+      @Override
+      public void onBoxClicked(String selectedColor) {
+
+        displayAlert(selectedColor);
+
+      }
+    });
+
+
+  }
+
+
+
+  private void displayAlert(final String selectedColor) {
+    new AlertDialog.Builder(getActivity())
+        .setTitle("Apply Theme?")
+        .setMessage("Are you sure you want to apply this color?")
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            // continue with delete
+            PrefUtils.setSelectedColor(getActivity(), selectedColor);
+            colorBoxChoosenTheme.setCurrentColor(PrefUtils.getSelectedColor(getActivity()));
+            colorBoxChoosenTheme.setup();
+            ((HomeActivity) getActivity()).setThemeColor();
+             dialog.dismiss();
+            resetChooser();
+          }
+        })
+        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            // do nothing
+            dialog.dismiss();
+            resetChooser();
+          }
+        })
+        .show();
+
+  }
+
+  public void resetChooser(){
+    colorChooser.setVisibility(View.GONE);
+    colorBoxChoosenTheme.setVisibility(View.VISIBLE);
+    txtTitleChooseTheme.setVisibility(View.VISIBLE);
+  }
+
+  private View.OnClickListener chooseThemeClickListner = new OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+      if (!colorChooser.isShown()) {
+        colorChooser.setVisibility(View.VISIBLE);
+        colorBoxChoosenTheme.setVisibility(View.GONE);
+        txtTitleChooseTheme.setVisibility(View.GONE);
+        colorChooser.setup();
+
+      }
+
+    }
+  };
 
 }

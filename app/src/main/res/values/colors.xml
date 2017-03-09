@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#181818</color>
-  <color name="colorPrimaryDark">#181818</color>
+  <color name="colorPrimary">#006064</color>
+  <color name="colorPrimaryDark">#006064</color>
 
-  <color name="colorAccent">#FF4081</color>
+  <color name="colorAccent">#C62828</color>
 
 
   <color name="neon_yellow">#F3F315</color>
@@ -14,5 +14,6 @@
 
   <color name="lightRed">#EF5350</color>
   <color name="darkRed">#C62828</color>
+
 
 </resources>

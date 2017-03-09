@@ -1,13 +1,140 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:orientation="vertical"
   tools:context="com.xbpsolutions.ceslauncher.ui.settings.SettingsFragment">
 
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
+  <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="@string/hello_blank_fragment" />
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:gravity="center_vertical"
+    android:text="CUSTOMIZATION"
+    android:textColor="#fff"
+    android:textSize="32sp"
+    app:ftype="black" />
 
-</FrameLayout>
+  <RelativeLayout
+    android:id="@+id/relativeChooseTheme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="#30ffffff">
+
+    <com.xbpsolutions.ceslauncher.ui.widgets.ColorChooser
+      android:id="@+id/colorChooser"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="4dp"
+      android:scrollbars="none"
+      android:visibility="gone"></com.xbpsolutions.ceslauncher.ui.widgets.ColorChooser>
+
+    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+      android:id="@+id/txtTitleChooseTheme"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="16dp"
+      android:gravity="center_vertical"
+      android:text="CHOOSE THEME"
+      android:textColor="#fff"
+      android:textSize="18sp"
+      app:ftype="bold" />
+
+    <com.xbpsolutions.ceslauncher.ui.widgets.ColorBox
+      android:id="@+id/colorBoxChoosenTheme"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_marginRight="16dp"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true">
+
+
+    </com.xbpsolutions.ceslauncher.ui.widgets.ColorBox>
+
+
+  </RelativeLayout>
+
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="#30ffffff">
+    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="16dp"
+      android:gravity="center_vertical"
+      android:text="CHOOSE FONT"
+      android:textColor="#fff"
+      android:textSize="18sp"
+      app:ftype="bold" />
+
+    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="16dp"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:text="Muli"
+      android:textColor="#fff"
+      android:textSize="16sp"
+      app:ftype="bold">
+
+    </com.xbpsolutions.ceslauncher.ui.widgets.TfTextView>
+  </RelativeLayout>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="#30ffffff">
+    <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:padding="16dp"
+      android:gravity="center_vertical"
+      android:text="CHANGE LAUNCHER"
+      android:textColor="#fff"
+      android:textSize="18sp"
+      app:ftype="bold" />
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="16dp"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:text="Muli"
+      android:textColor="#fff"
+      android:textSize="16sp">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_mood_bad" />
+
+
+    </LinearLayout>
+  </RelativeLayout>
+
+  <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:padding="16dp"
+    android:gravity="center_vertical"
+    android:text="ABOUT "
+    android:textColor="#fff"
+    android:textSize="32sp"
+    app:ftype="black" />
+
+
+</LinearLayout>

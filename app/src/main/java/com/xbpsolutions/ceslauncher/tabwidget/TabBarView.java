@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.LinearLayout;
@@ -65,6 +66,7 @@ public class TabBarView extends LinearLayout {
     mPaint.setAntiAlias(true);
 
     mStripHeight = (int) (STRIP_HEIGHT * getResources().getDisplayMetrics().density + .5f);
+    setGravity(Gravity.CENTER);
   }
 
   public void setStripColor(int color) {
