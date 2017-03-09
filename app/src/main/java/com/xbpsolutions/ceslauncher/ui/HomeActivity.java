@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -50,13 +51,10 @@ public class HomeActivity extends AppCompatActivity {
         (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     View v = inflator.inflate(R.layout.custom_ab, null);
+
     tabBarView = (TabBarView) v.findViewById(R.id.tab_bar);
 
     ArrayList<String> colors = new ArrayList<>();
-//    colors.add("#C1FD33");
-//    colors.add("#FF9933");
-//    colors.add("#0DD5FC");
-//    colors.add("#F3F315");
     colors.add("#ffffff");
     colors.add("#ffffff");
     colors.add("#ffffff");
@@ -94,6 +92,12 @@ public class HomeActivity extends AppCompatActivity {
       window.setStatusBarColor(Color.parseColor(color));
     }
 
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.settings_menu, menu);
+    return false;
   }
 
   public class SectionsPagerAdapter extends FragmentPagerAdapter implements IconTabProvider {
