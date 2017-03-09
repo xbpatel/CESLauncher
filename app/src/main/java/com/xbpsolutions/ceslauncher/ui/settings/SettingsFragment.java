@@ -42,6 +42,7 @@ public class SettingsFragment extends Fragment {
   private RelativeLayout relativeChooseTheme;
   private RelativeLayout relativeChangeLauncher;
 
+  //this is settings
 
   public SettingsFragment() {
     // Required empty public constructor
