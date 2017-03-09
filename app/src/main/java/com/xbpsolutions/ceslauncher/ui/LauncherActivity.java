@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import com.xbpsolutions.ceslauncher.R;
+import com.xbpsolutions.ceslauncher.helper.Functions;
 import com.xbpsolutions.ceslauncher.helper.HomeManager;
 import com.xbpsolutions.ceslauncher.helper.PrefUtils;
 import com.xbpsolutions.ceslauncher.ui.splash.IntroItem;
@@ -53,7 +54,7 @@ public class LauncherActivity extends AppCompatActivity {
     public void onClick(View view) {
 
       if (pager.getCurrentItem() == 2) {
-        resetPreferredLauncherAndOpenChooser(thisCont);
+        Functions.resetPreferredLauncherAndOpenChooser(thisCont);
       } else {
         pager.setCurrentItem(pager.getCurrentItem() + 1);
       }
@@ -112,22 +113,6 @@ public class LauncherActivity extends AppCompatActivity {
 
   }
 
-  public static void resetPreferredLauncherAndOpenChooser(Context context) {
-    PackageManager packageManager = context.getPackageManager();
-    ComponentName componentName = new ComponentName(context, MockHome.class);
-    packageManager
-        .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP);
-
-    Intent selector = new Intent(Intent.ACTION_MAIN);
-    selector.addCategory(Intent.CATEGORY_HOME);
-    selector.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    context.startActivity(selector);
-
-    packageManager
-        .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
-            PackageManager.DONT_KILL_APP);
-  }
 
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();

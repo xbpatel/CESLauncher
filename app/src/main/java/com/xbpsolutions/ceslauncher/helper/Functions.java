@@ -5,9 +5,11 @@ package com.xbpsolutions.ceslauncher.helper;
  */
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -35,6 +37,7 @@ import android.widget.ImageView;
 
 import com.xbpsolutions.ceslauncher.BuildConfig;
 import com.xbpsolutions.ceslauncher.R;
+import com.xbpsolutions.ceslauncher.ui.MockHome;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
 import java.io.File;
 import java.text.ParseException;
@@ -240,6 +243,23 @@ public class Functions {
         output = calendar.getTime();
 
         return output;
+    }
+
+    public static void resetPreferredLauncherAndOpenChooser(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        ComponentName componentName = new ComponentName(context, MockHome.class);
+        packageManager
+            .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+        Intent selector = new Intent(Intent.ACTION_MAIN);
+        selector.addCategory(Intent.CATEGORY_HOME);
+        selector.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(selector);
+
+        packageManager
+            .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
+                PackageManager.DONT_KILL_APP);
     }
 
 //

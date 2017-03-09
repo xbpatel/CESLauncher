@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.xbpsolutions.ceslauncher.R;
+import com.xbpsolutions.ceslauncher.helper.Functions;
 import com.xbpsolutions.ceslauncher.helper.PrefUtils;
 import com.xbpsolutions.ceslauncher.ui.HomeActivity;
 import com.xbpsolutions.ceslauncher.ui.widgets.ColorBox;
@@ -39,6 +40,7 @@ public class SettingsFragment extends Fragment {
   private ColorBox colorBoxChoosenTheme;
   private ColorChooser colorChooser;
   private RelativeLayout relativeChooseTheme;
+  private RelativeLayout relativeChangeLauncher;
 
 
   public SettingsFragment() {
@@ -94,8 +96,9 @@ public class SettingsFragment extends Fragment {
     colorChooser = (ColorChooser) view.findViewById(R.id.colorChooser);
     txtTitleChooseTheme = (TfTextView) view.findViewById(R.id.txtTitleChooseTheme);
     relativeChooseTheme = (RelativeLayout) view.findViewById(R.id.relativeChooseTheme);
+    relativeChangeLauncher = (RelativeLayout) view.findViewById(R.id.relativeChangeLauncher);
     relativeChooseTheme.setOnClickListener(chooseThemeClickListner);
-
+    relativeChangeLauncher.setOnClickListener(changeLauncherClickListner);
 
     colorChooser.setClickListner(new OnBoxClickListner() {
       @Override
@@ -110,7 +113,6 @@ public class SettingsFragment extends Fragment {
   }
 
 
-
   private void displayAlert(final String selectedColor) {
     new AlertDialog.Builder(getActivity())
         .setTitle("Apply Theme?")
@@ -122,7 +124,7 @@ public class SettingsFragment extends Fragment {
             colorBoxChoosenTheme.setCurrentColor(PrefUtils.getSelectedColor(getActivity()));
             colorBoxChoosenTheme.setup();
             ((HomeActivity) getActivity()).setThemeColor();
-             dialog.dismiss();
+            dialog.dismiss();
             resetChooser();
           }
         })
@@ -137,7 +139,7 @@ public class SettingsFragment extends Fragment {
 
   }
 
-  public void resetChooser(){
+  public void resetChooser() {
     colorChooser.setVisibility(View.GONE);
     colorBoxChoosenTheme.setVisibility(View.VISIBLE);
     txtTitleChooseTheme.setVisibility(View.VISIBLE);
@@ -154,6 +156,30 @@ public class SettingsFragment extends Fragment {
         colorChooser.setup();
 
       }
+
+    }
+  };
+
+  private View.OnClickListener changeLauncherClickListner = new OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+      new AlertDialog.Builder(getActivity())
+          .setTitle("Don't Go")
+          .setMessage("Are you sure you want to move from CES?")
+          .setPositiveButton("YES !!", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+              Functions.resetPreferredLauncherAndOpenChooser(getActivity());
+
+            }
+          })
+          .setNegativeButton("No, I like CES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+              // do nothing
+              dialog.dismiss();
+            }
+          })
+          .show();
 
     }
   };
