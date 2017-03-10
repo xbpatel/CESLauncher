@@ -1,36 +1,36 @@
 <resources>
-  <string name="app_name">CES</string>
-  <string name="title_section1">Home</string>
-  <string name="title_section2">Calls</string>
-  <string name="title_section3">Messages</string>
+    <string name="app_name">CES</string>
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Calls</string>
+    <string name="title_section3">Messages</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-  <string name="change_default_home_dialog_body">Dialog Body</string>
-  <string name="title_section4">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_default_home_dialog_body">Dialog Body</string>
+    <string name="title_section4">Settings</string>
 
-  <string-array name="mdcolor_900">
-    <item>#b0120a</item>
-    <item>#880e4f</item>
-    <item>#4a148c</item>
-    <item>#311b92</item>
-    <item>#1a237e</item>
-    <item>#2a36b1</item>
-    <item>#2E1C2B</item>
-    <item>#006064</item>
-    <item>#004d40</item>
-    <item>#0d5302</item>
-    <item>#33691e</item>
-    <item>#042A2B</item>
-    <item>#1B1725</item>
-    <item>#e65100</item>
-    <item>#bf360c</item>
-    <item>#3e2723</item>
-    <item>#212121</item>
-    <item>#263238</item>
-    <item>#2e0000</item>
-    <item>#534B62</item>
+    <string-array name="mdcolor_900">
+        <item>#b0120a</item>
+        <item>#880e4f</item>
+        <item>#4a148c</item>
+        <item>#311b92</item>
+        <item>#1a237e</item>
+        <item>#2a36b1</item>
+        <item>#2E1C2B</item>
+        <item>#006064</item>
+        <item>#004d40</item>
+        <item>#0d5302</item>
+        <item>#33691e</item>
+        <item>#042A2B</item>
+        <item>#1B1725</item>
+        <item>#e65100</item>
+        <item>#bf360c</item>
+        <item>#3e2723</item>
+        <item>#212121</item>
+        <item>#263238</item>
+        <item>#2e0000</item>
+        <item>#534B62</item>
 
 
-  </string-array>
+    </string-array>
 </resources>

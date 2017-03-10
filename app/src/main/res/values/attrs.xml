@@ -2,6 +2,9 @@
 <resources>
 
 
+  <declare-styleable name="SlidingDrawer">
+    <attr name="shadow_length" format="dimension" />
+  </declare-styleable>
   <declare-styleable name="TfTextView">
     <attr format="boolean" name="isBold" />
     <attr name="ftype">

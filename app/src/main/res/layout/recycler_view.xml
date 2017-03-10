@@ -1,74 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-
-  <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recyclerView"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="vertical" />
+    android:layout_height="match_parent">
 
-  <LinearLayout
-    android:id="@+id/linearBottomOptions"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:layout_alignParentBottom="true"
-    android:background="@color/lightRed"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:visibility="gone">
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
     <LinearLayout
-      android:id="@+id/linearBottomAppInfo"
-      android:layout_width="match_parent"
-      android:layout_height="48dp"
-      android:layout_weight="1"
-      android:layout_alignParentBottom="true"
-      android:background="@color/lightRed"
-      android:gravity="center"
-      android:orientation="horizontal"
-      android:visibility="visible">
-      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
-        android:id="@+id/txtAppInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_action_info_outline"
-        android:drawablePadding="8dp"
+        android:id="@+id/linearBottomOptions"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/lightRed"
         android:gravity="center"
-        android:text="APP INFO"
-        android:textColor="#fff"
-        android:textSize="18sp"
-        app:ftype="bold" />
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/linearBottomAppInfo"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:background="@color/lightRed"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+                android:id="@+id/txtAppInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_action_info_outline"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="APP INFO"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:ftype="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearBottomUninstall"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:background="@color/lightRed"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+
+            <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+                android:id="@+id/txtUninstall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_action_delete"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="UNINSTALL"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:ftype="bold" />
+        </LinearLayout>
+
+
     </LinearLayout>
-
-    <LinearLayout
-      android:id="@+id/linearBottomUninstall"
-      android:layout_width="match_parent"
-      android:layout_height="48dp"
-      android:layout_weight="1"
-      android:layout_alignParentBottom="true"
-      android:background="@color/lightRed"
-      android:gravity="center"
-      android:orientation="horizontal"
-      android:visibility="visible">
-
-
-      <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
-        android:id="@+id/txtUninstall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_action_delete"
-        android:drawablePadding="8dp"
-        android:gravity="center"
-        android:text="UNINSTALL"
-        android:textColor="#fff"
-        android:textSize="18sp"
-        app:ftype="bold" />
-    </LinearLayout>
-
-
-  </LinearLayout>
 
 </RelativeLayout>
