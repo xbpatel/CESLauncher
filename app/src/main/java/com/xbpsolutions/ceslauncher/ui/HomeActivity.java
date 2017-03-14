@@ -36,9 +36,7 @@ import java.util.Locale;
 public class HomeActivity extends AppCompatActivity {
 
     private TabBarView tabBarView;
-
     SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -93,7 +91,6 @@ public class HomeActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(Color.parseColor(color));
         }
-
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter implements IconTabProvider {

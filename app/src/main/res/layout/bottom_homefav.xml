@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@android:color/transparent"
+  android:orientation="vertical">
+
+
+  <FrameLayout
+    android:id="@+id/favStrip"
+    android:layout_width="100dp"
+    android:layout_height="48dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/bgcard">
+
+
+    <ImageView
+      android:id="@+id/imgFav"
+      android:layout_width="100dp"
+      android:layout_height="48dp"
+      android:layout_gravity="center_horizontal"
+      android:paddingTop="8dp"
+      android:gravity="center"
+      android:src="@drawable/ic_star"
+      android:text="Favourite"
+      android:tint="@color/darkRed" />
+
+
+  </FrameLayout>
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:layout_height="220dp"
+    android:background="#faffffff"
     android:orientation="vertical">
 
-
-    <FrameLayout
-        android:id="@+id/favStrip"
-        android:layout_width="100dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/bgcard">
-
-
-        <ImageView
-            android:id="@+id/imgFav"
-            android:layout_width="100dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:paddingTop="8dp"
-            android:src="@drawable/ic_star"
-            android:text="Favourite"
-            android:tint="@color/darkRed" />
+    <TextClock
+      android:textStyle="bold"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="2dp"
+      android:gravity="right"
+      android:textColor="#000"
+      android:textSize="12sp" />
 
 
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:background="#faffffff"></FrameLayout>
+  </LinearLayout>
 
 
 </LinearLayout>

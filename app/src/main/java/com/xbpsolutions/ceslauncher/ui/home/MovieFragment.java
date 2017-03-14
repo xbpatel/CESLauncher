@@ -320,6 +320,7 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
     private class TransperentClickListner implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            mBottomSheetBehavior.setPeekHeight((int) Functions.convertDpToPixel(48f, getActivity()));
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
