@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
@@ -13,15 +14,21 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.LoginFilter;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import com.xbpsolutions.ceslauncher.R;
+import com.xbpsolutions.ceslauncher.helper.Functions;
+import com.xbpsolutions.ceslauncher.ui.favourite.BottomSheetFavouriteApps;
 import com.xbpsolutions.ceslauncher.ui.home.adapters.BaseMovieAdapter;
 import com.xbpsolutions.ceslauncher.ui.home.adapters.MovieAdapterByName;
 import com.xbpsolutions.ceslauncher.ui.widgets.SlidingDrawer;
@@ -44,6 +51,8 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
     private LinearLayout linearBottomUninstall, linearBottomAppInfo, linearBottomOptions;
     private TfTextView txtUninstall;
     private SlidingDrawer slidingDrawer;
+    private BottomSheetBehavior mBottomSheetBehavior;
+    private BottomSheetFavouriteApps bottomfavouritelayout;
 
     @Nullable
     @Override
@@ -53,7 +62,7 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
@@ -66,8 +75,63 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
         linearBottomUninstall.setOnDragListener(new MyUnInstallDragListener());
         linearBottomAppInfo.setOnDragListener(new MyAppinfoDragListener());
 
+        final View bottomSheet = view.findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        mBottomSheetBehavior.setPeekHeight((int) Functions.convertDpToPixel(48f, getActivity()));
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        getView().findViewById(R.id.viewTransperent).setAlpha(0);
+
+        view.findViewById(R.id.viewTransperent).setOnClickListener(new TransperentClickListner());
+        bottomfavouritelayout = (BottomSheetFavouriteApps) view.findViewById(R.id.bottomfavouritelayout);
+        bottomfavouritelayout.setOnFavouriteButtonClickListner(new BottomSheetFavouriteApps.OnFavouriteButtonClickListner() {
+            @Override
+            public void onClick() {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(View bottomSheet, int newState) {
+
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    view.findViewById(R.id.viewTransperent).setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onSlide(View bottomSheet, float slideOffset) {
+                if (!view.findViewById(R.id.viewTransperent).isShown()) {
+                    view.findViewById(R.id.viewTransperent).setVisibility(View.VISIBLE);
+                }
+                view.findViewById(R.id.favStrip).setAlpha(1 - slideOffset);
+                getView().findViewById(R.id.viewTransperent).setAlpha(slideOffset);
+
+            }
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    if (dy > 0) {
+                        mBottomSheetBehavior.setPeekHeight((int) Functions.convertDpToPixel(0f, getActivity()));
+                    } else if (dy < 0) {
+                        mBottomSheetBehavior.setPeekHeight((int) Functions.convertDpToPixel(48f, getActivity()));
+                    }
+                }
+
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
 
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -132,7 +196,7 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
 
     @Override
     public void onItemLongPressed(View view, int adapterPosition, int positionInCollection) {
-
+        mBottomSheetBehavior.setPeekHeight((int) Functions.convertDpToPixel(48f, getActivity()));
         AppModel app = movieList.get(positionInCollection);
         ClipData data = ClipData.newPlainText("Drag", app.getApplicationPackageName());
         DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
@@ -145,8 +209,6 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
         } else {
             linearBottomUninstall.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     @Override
@@ -252,6 +314,13 @@ public class MovieFragment extends Fragment implements BaseMovieAdapter.OnItemCl
                     break;
             }
             return true;
+        }
+    }
+
+    private class TransperentClickListner implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 }

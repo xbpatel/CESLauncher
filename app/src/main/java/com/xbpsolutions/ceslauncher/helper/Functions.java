@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -25,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -39,6 +41,7 @@ import com.xbpsolutions.ceslauncher.BuildConfig;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.ui.MockHome;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
+
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +52,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Functions {
+
+
+    public static float convertDpToPixel(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return px;
+    }
+
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param px      A value in px (pixels) unit. Which we need to convert into db
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent dp equivalent to px value
+     */
+    public static float convertPixelsToDp(float px, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
 
     private static final String ProfilePicture = "metropolitan/profilePicture";
 
@@ -118,7 +143,6 @@ public class Functions {
     }
 
 
-
     public static String getTimeFromDate(String date) {
         String time = "";
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -142,7 +166,7 @@ public class Functions {
             output = sdf2.format(date1);
         } catch (ParseException e) {
             e.printStackTrace();
-            Functions.LogE("error",e.getMessage());
+            Functions.LogE("error", e.getMessage());
         }
         return output;
     }
@@ -249,8 +273,8 @@ public class Functions {
         PackageManager packageManager = context.getPackageManager();
         ComponentName componentName = new ComponentName(context, MockHome.class);
         packageManager
-            .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
+                .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                        PackageManager.DONT_KILL_APP);
 
         Intent selector = new Intent(Intent.ACTION_MAIN);
         selector.addCategory(Intent.CATEGORY_HOME);
@@ -258,8 +282,8 @@ public class Functions {
         context.startActivity(selector);
 
         packageManager
-            .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
-                PackageManager.DONT_KILL_APP);
+                .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
+                        PackageManager.DONT_KILL_APP);
     }
 
 //
