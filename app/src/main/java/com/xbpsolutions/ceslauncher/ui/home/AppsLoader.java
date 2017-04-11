@@ -11,9 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
 
-/**
- * @credit http://developer.android.com/reference/android/content/AsyncTaskLoader.html
- */
 public class AppsLoader extends AsyncTaskLoader<ArrayList<AppModel>> {
     ArrayList<AppModel> mInstalledApps;
 
@@ -28,6 +25,7 @@ public class AppsLoader extends AsyncTaskLoader<ArrayList<AppModel>> {
 
     @Override
     public ArrayList<AppModel> loadInBackground() {
+
         // retrieve the list of installed applications
         List<ApplicationInfo> apps = mPm.getInstalledApplications(0);
 
@@ -54,6 +52,7 @@ public class AppsLoader extends AsyncTaskLoader<ArrayList<AppModel>> {
         Collections.sort(items, ALPHA_COMPARATOR);
 
         return items;
+
     }
 
     @Override
@@ -137,20 +136,13 @@ public class AppsLoader extends AsyncTaskLoader<ArrayList<AppModel>> {
         }
     }
 
-    /**
-     * Helper method to do the cleanup work if needed, for example if we're
-     * using Cursor, then we should be closing it here
-     *
-     * @param apps
-     */
+
     protected void onReleaseResources(ArrayList<AppModel> apps) {
-        // do nothing
+
+
     }
 
 
-    /**
-     * Perform alphabetical comparison of application entry objects.
-     */
     public static final Comparator<AppModel> ALPHA_COMPARATOR = new Comparator<AppModel>() {
         private final Collator sCollator = Collator.getInstance();
         @Override

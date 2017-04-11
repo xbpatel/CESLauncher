@@ -39,6 +39,7 @@ import com.xbpsolutions.ceslauncher.BuildConfig;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.ui.MockHome;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
+
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -118,7 +119,6 @@ public class Functions {
     }
 
 
-
     public static String getTimeFromDate(String date) {
         String time = "";
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -142,7 +142,7 @@ public class Functions {
             output = sdf2.format(date1);
         } catch (ParseException e) {
             e.printStackTrace();
-            Functions.LogE("error",e.getMessage());
+            Functions.LogE("error", e.getMessage());
         }
         return output;
     }
@@ -249,8 +249,8 @@ public class Functions {
         PackageManager packageManager = context.getPackageManager();
         ComponentName componentName = new ComponentName(context, MockHome.class);
         packageManager
-            .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
+                .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                        PackageManager.DONT_KILL_APP);
 
         Intent selector = new Intent(Intent.ACTION_MAIN);
         selector.addCategory(Intent.CATEGORY_HOME);
@@ -258,8 +258,8 @@ public class Functions {
         context.startActivity(selector);
 
         packageManager
-            .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
-                PackageManager.DONT_KILL_APP);
+                .setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
+                        PackageManager.DONT_KILL_APP);
     }
 
 //
