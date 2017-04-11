@@ -83,7 +83,6 @@ public class CallsFragment extends BaseFragment {
         layoutNoPermissionLog = (LinearLayout) view.findViewById(R.id.layoutNoPermissionLog);
         listCallLog = (RecyclerView) view.findViewById(R.id.listCallHistory);
         txtProcessPermission.setOnClickListener(permissionClick);
-
         setDisplayAccordingPermission();
 
 
@@ -121,7 +120,6 @@ public class CallsFragment extends BaseFragment {
 
                 @Override
                 public void onPermissionDenied() {
-
                     Toast.makeText(getActivity(), "Permission is not accepted", Toast.LENGTH_SHORT).show();
 
                 }
@@ -140,7 +138,6 @@ public class CallsFragment extends BaseFragment {
     private void getAllHistory() {
 
         Log.e("Calls", "Called History Method");
-
         Uri allCalls = Uri.parse("content://call_log/calls");
         Cursor c = getActivity().managedQuery(allCalls, null, null, null, null);
         if (c != null) {
@@ -160,7 +157,6 @@ public class CallsFragment extends BaseFragment {
             Log.e("History ", String.format("Name :%s, Number : %s", n, phNumber));
 
         }
-
 
     }
 
