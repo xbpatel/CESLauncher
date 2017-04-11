@@ -79,7 +79,6 @@ public class CallsFragment extends BaseFragment {
 
         Log.e("Permission accepted?", "  " + isPermissionAccepted);
 
-
         txtProcessPermission = (TfTextView) view.findViewById(R.id.txtProcessPermission);
         layoutNoPermissionLog = (LinearLayout) view.findViewById(R.id.layoutNoPermissionLog);
         listCallLog = (RecyclerView) view.findViewById(R.id.listCallHistory);
@@ -93,9 +92,12 @@ public class CallsFragment extends BaseFragment {
     private void setDisplayAccordingPermission() {
 
         isPermissionAccepted = permissionHelper.checkSelfPermission(new String[]{Manifest.permission.READ_CALL_LOG});
+
         if (isPermissionAccepted) {
+
             layoutNoPermissionLog.setVisibility(View.GONE);
             listCallLog.setVisibility(View.VISIBLE);
+            getAllHistory();
 
         } else {
 
@@ -137,6 +139,7 @@ public class CallsFragment extends BaseFragment {
 
     private void getAllHistory() {
 
+        Log.e("Calls", "Called History Method");
 
         Uri allCalls = Uri.parse("content://call_log/calls");
         Cursor c = getActivity().managedQuery(allCalls, null, null, null, null);
