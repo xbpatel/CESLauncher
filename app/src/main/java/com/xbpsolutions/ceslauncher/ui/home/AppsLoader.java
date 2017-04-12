@@ -124,6 +124,8 @@ public class AppsLoader extends AsyncTaskLoader<ArrayList<AppModel>> {
 
         // At this point we can release the resources associated with 'apps'
         // if needed.
+
+
         if (mInstalledApps != null) {
             onReleaseResources(mInstalledApps);
             mInstalledApps = null;
@@ -138,7 +140,6 @@ public class AppsLoader extends AsyncTaskLoader<ArrayList<AppModel>> {
 
 
     protected void onReleaseResources(ArrayList<AppModel> apps) {
-
 
     }
 

@@ -239,7 +239,6 @@ public class Functions {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-
         output = calendar.getTime();
 
         return output;
