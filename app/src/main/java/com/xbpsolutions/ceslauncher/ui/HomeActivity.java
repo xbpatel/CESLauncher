@@ -206,15 +206,5 @@ public class HomeActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_HOME:
-                Toast.makeText(this, "Home Pressed", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        return true;
-    }
 }

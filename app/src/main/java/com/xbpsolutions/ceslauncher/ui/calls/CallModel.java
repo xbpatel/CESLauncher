@@ -1,5 +1,8 @@
 package com.xbpsolutions.ceslauncher.ui.calls;
 
+import android.net.Uri;
+import android.provider.ContactsContract;
+
 import java.util.Date;
 
 /**
@@ -8,14 +11,32 @@ import java.util.Date;
 
 public class CallModel {
 
+    String _id;
     String pname;
     String phNumber;
     String callType;
     String callDate;
     Date callDayTime;
     String callDuration;
+    Uri photoUri;
+
+    public Uri getPhotoUri() {
+        return photoUri;
+    }
+
+    public void setPhotoUri(Uri photoUri) {
+        this.photoUri = photoUri;
+    }
 
     public CallModel() {
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getPname() {
@@ -65,4 +86,6 @@ public class CallModel {
     public void setCallDuration(String callDuration) {
         this.callDuration = callDuration;
     }
+
+
 }

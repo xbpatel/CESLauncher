@@ -1,10 +1,15 @@
 package com.xbpsolutions.ceslauncher.ui.calls;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.Image;
+import android.net.Uri;
 import android.provider.CallLog;
+import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +22,8 @@ import android.widget.ImageView;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.helper.PrefUtils;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -81,7 +88,13 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
                 holder.imgCallType.setImageResource(R.drawable.ic_call_received_black_24dp);
                 holder.imgCallType.setColorFilter(ContextCompat.getColor(context, R.color.darkRed), PorterDuff.Mode.SRC_ATOP);
                 break;
+        }
 
+
+        if (mValues.get(position).getPhotoUri() != null) {
+            holder.profileImage.setImageURI(mValues.get(position).getPhotoUri());
+        } else {
+            holder.profileImage.setImageResource(R.mipmap.ic_launcher_round);
         }
 
 
@@ -98,6 +111,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
         public TfTextView txtCallLogName;
         public ImageView imgCallType;
         public ImageView imgCall;
+        public CircleImageView profileImage;
 
         public ViewHolder(View view) {
             super(view);
@@ -105,7 +119,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
             txtCallLogName = (TfTextView) view.findViewById(R.id.txtCallLogName);
             imgCallType = (ImageView) view.findViewById(R.id.imgCallType);
             imgCall = (ImageView) view.findViewById(R.id.imgCallLog);
-
+            profileImage = (CircleImageView) view.findViewById(R.id.profile_image);
 
 
         }
@@ -122,5 +136,6 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
                 Math.min(g, 255),
                 Math.min(b, 255));
     }
+
 
 }

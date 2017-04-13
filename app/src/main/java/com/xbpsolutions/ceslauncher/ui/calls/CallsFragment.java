@@ -3,6 +3,8 @@ package com.xbpsolutions.ceslauncher.ui.calls;
 
 import android.Manifest;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -20,6 +22,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -200,7 +203,7 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
         int type = managedCursor.getColumnIndex(CallLog.Calls.TYPE);
         int date = managedCursor.getColumnIndex(CallLog.Calls.DATE);
         int duration = managedCursor.getColumnIndex(CallLog.Calls.DURATION);
-
+        int id = managedCursor.getColumnIndex(ContactsContract.PhoneLookup._ID);
         ArrayList<CallModel> calls = new ArrayList<>();
 
         while (managedCursor.moveToNext()) {
@@ -235,6 +238,15 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
             callModel.setCallType(callType);
             callModel.setPhNumber(phNumber);
             callModel.setPname(pname);
+
+            String cID = fetchContactIdFromPhoneNumber(phNumber);
+            if (!TextUtils.isEmpty(cID)) {
+                long contactID = Long.parseLong(cID);
+                Uri photoURI = getPhotoUri(contactID);
+                callModel.setPhotoUri(photoURI);
+            }
+
+
             calls.add(callModel);
 
             if (pname == null) {
@@ -285,5 +297,43 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
                 cur.close();
         }
         return "";
+    }
+
+    public Uri getPhotoUri(long contactId) {
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        try {
+            Cursor cursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, null, ContactsContract.Data.CONTACT_ID + "=" + contactId + " AND " + ContactsContract.Data.MIMETYPE + "='" + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'", null, null);
+
+            if (cursor != null) {
+                if (!cursor.moveToFirst()) {
+                    return null; // no photo
+                }
+            } else {
+                return null; // error in cursor process
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        Uri person = ContentUris.withAppendedId(
+                ContactsContract.Contacts.CONTENT_URI, contactId);
+        return Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+    }
+
+    public String fetchContactIdFromPhoneNumber(String phoneNumber) {
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+        Cursor cursor = getActivity().getContentResolver().query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID}, null, null, null);
+
+        String contactId = "";
+
+        if (cursor.moveToFirst()) {
+            do {
+                contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
+            } while (cursor.moveToNext());
+        }
+
+        return contactId;
     }
 }
