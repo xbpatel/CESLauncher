@@ -1,8 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/movie_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:textColor="@android:color/black" />
+    android:background="#30ffffff"
+    android:gravity="top"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/dbimage"
+        app:civ_border_color="#30ffffff"
+        app:civ_border_width="1dp" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.xbpsolutions.ceslauncher.ui.widgets.TfTextView
+            android:id="@+id/txtCallLogName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="#d1d1d1"
+            android:textSize="18sp"
+            app:ftype="bold" />
+
+        <ImageView
+            android:id="@+id/imgCallType"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerInside" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp">
+
+        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imgCallLog"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_call_black_24dp" />
+    </FrameLayout>
+
+
+</LinearLayout>

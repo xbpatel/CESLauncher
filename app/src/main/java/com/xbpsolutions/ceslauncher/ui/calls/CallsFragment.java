@@ -12,20 +12,20 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.app.Activity;
-
-
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.helper.PermissionHelper;
+import com.xbpsolutions.ceslauncher.helper.VerticalSpaceItemDecoration;
 import com.xbpsolutions.ceslauncher.ui.BaseFragment;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
 
@@ -109,10 +110,7 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
     @Override
     public void onResume() {
         super.onResume();
-
-        if(!getLoaderManager().hasRunningLoaders()){
-            getLoaderManager().restartLoader(URL_LOADER, null, this);
-        }
+        getLoaderManager().restartLoader(URL_LOADER, null, this);
 
     }
 
@@ -130,7 +128,6 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
 
             layoutNoPermissionLog.setVisibility(View.VISIBLE);
             listCallLog.setVisibility(View.GONE);
-
         }
     }
 
@@ -149,7 +146,6 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
                 @Override
                 public void onPermissionDenied() {
                     Toast.makeText(getActivity(), "Permission is not accepted", Toast.LENGTH_SHORT).show();
-
                 }
 
                 @Override
@@ -166,27 +162,6 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
     public void getAllHistory() {
 
         getLoaderManager().initLoader(URL_LOADER, null, this);
-//        Log.e("Calls", "Called History Method");
-//        Uri allCalls = Uri.parse("content://call_log/calls");
-//        Cursor c = getActivity().managedQuery(allCalls, null, null, null, null);
-//        if (c != null) {
-//            c.moveToFirst();
-//        }
-//
-//
-//        int name = c.getColumnIndex(CallLog.Calls.CACHED_NAME);
-//        int number = c.getColumnIndex(CallLog.Calls.NUMBER);
-//        int type = c.getColumnIndex(CallLog.Calls.TYPE);
-//        int date = c.getColumnIndex(CallLog.Calls.DATE);
-//        int duration = c.getColumnIndex(CallLog.Calls.DURATION);
-//
-//        while (c.moveToNext()) {
-//
-//            String phNumber = c.getString(number);
-//            String n = c.getString(name);
-//            Log.e("History ", String.format("Name :%s, Number : %s", n, phNumber));
-//
-//        }
 
     }
 
@@ -226,6 +201,8 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
         int date = managedCursor.getColumnIndex(CallLog.Calls.DATE);
         int duration = managedCursor.getColumnIndex(CallLog.Calls.DURATION);
 
+        ArrayList<CallModel> calls = new ArrayList<>();
+
         while (managedCursor.moveToNext()) {
 
             String pname = managedCursor.getString(name);
@@ -251,8 +228,16 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
                     break;
             }
 
-            if (pname == null) {
+            CallModel callModel = new CallModel();
+            callModel.setCallDate(callDate);
+            callModel.setCallDayTime(callDayTime);
+            callModel.setCallDuration(callDuration);
+            callModel.setCallType(callType);
+            callModel.setPhNumber(phNumber);
+            callModel.setPname(pname);
+            calls.add(callModel);
 
+            if (pname == null) {
                 String receivedNumber = contactExists(getActivity(), phNumber);
                 Log.e("History: ", String.format(" Received Name : %s Phone : %s", pname, phNumber));
 
@@ -260,14 +245,27 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
                 Log.e("History: ", String.format("Name : %s Phone : %s", pname, phNumber));
             }
 
-
         }
-        managedCursor.close();
+        //managedCursor.close();
+
+        setupCalls(calls);
 
     }
 
+    private void setupCalls(ArrayList<CallModel> calls) {
+
+        CallLogAdapter adapter = new CallLogAdapter(getActivity(), calls);
+
+        listCallLog.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listCallLog.addItemDecoration(new VerticalSpaceItemDecoration(5));
+        listCallLog.setAdapter(adapter);
+
+    }
+
+
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
 
     }
 
