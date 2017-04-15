@@ -61,6 +61,8 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
     private RecyclerView listCallLog;
     boolean isPermissionAccepted;
     private static final int URL_LOADER = 1;
+    private boolean isDecorationAdded = false;
+    private VerticalSpaceItemDecoration verticalSpaceItemDecoration;
 
     public CallsFragment() {
         // Required empty public constructor
@@ -82,6 +84,8 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        verticalSpaceItemDecoration = new VerticalSpaceItemDecoration(5);
 
 
     }
@@ -270,7 +274,16 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
         CallLogAdapter adapter = new CallLogAdapter(getActivity(), calls);
 
         listCallLog.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listCallLog.addItemDecoration(new VerticalSpaceItemDecoration(5));
+
+//        if(isDecorationAdded == false){
+//
+//            isDecorationAdded = true;
+//        }
+
+
+        listCallLog.removeItemDecoration(verticalSpaceItemDecoration);
+        listCallLog.addItemDecoration(verticalSpaceItemDecoration);
+
         listCallLog.setAdapter(adapter);
 
     }

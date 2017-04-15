@@ -17,7 +17,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="1dp"
+    android:padding="16dp"
+    android:background="#30ffffff"
     android:orientation="vertical">
 
     <ImageView
@@ -35,7 +37,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@android:color/white"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:ftype="regular" />
 
 </LinearLayout>
