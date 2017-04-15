@@ -1,8 +1,10 @@
 package com.xbpsolutions.ceslauncher.ui.calls;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -19,8 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.xbpsolutions.ceslauncher.R;
+import com.xbpsolutions.ceslauncher.helper.PermissionHelper;
 import com.xbpsolutions.ceslauncher.helper.PrefUtils;
+import com.xbpsolutions.ceslauncher.ui.calls.widget.DSAvatarImageView;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
 
 import org.w3c.dom.Text;
@@ -37,7 +42,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
 
     private final List<CallModel> mValues;
     private Context context;
-
+    private boolean isPermissionGranted = false;
 
     public CallLogAdapter(Context ctx, List<CallModel> items) {
         mValues = items;
@@ -54,14 +59,17 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        String pName = (mValues.get(position).getPname() == null || TextUtils.isEmpty(mValues.get(position).getPname())) ? "Unknown" : mValues.get(position).getPname();
+        String pName = (mValues.get(position).getPname() == null || TextUtils.isEmpty(mValues.get(position).getPname())) ? mValues.get(position).getPhNumber() : mValues.get(position).getPname();
         holder.txtCallLogName.setText(pName);
+
+        String avtarName = (mValues.get(position).getPname() == null || TextUtils.isEmpty(mValues.get(position).getPname())) ? "Unknown" : mValues.get(position).getPname();
+        holder.profileImage.setName(avtarName);
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
             }
         });
@@ -70,6 +78,9 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
         int color = manipulateColor(Color.parseColor(PrefUtils.getSelectedColor(context)), 0.8f);
         holder.imgCallType.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         holder.imgCall.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+        holder.timestamp.setTextColor(color);
+        holder.profileImage.setBackgroundColor(Color.parseColor(PrefUtils.getSelectedColor(context)));
+        holder.profileImage.setTextColor(color);
 
         switch (callTypeCode) {
             case CallLog.Calls.OUTGOING_TYPE:
@@ -94,10 +105,29 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
         if (mValues.get(position).getPhotoUri() != null) {
             holder.profileImage.setImageURI(mValues.get(position).getPhotoUri());
         } else {
-            holder.profileImage.setImageResource(R.mipmap.ic_launcher_round);
+            //  holder.profileImage.setImageResource(R.mipmap.ic_launcher_round);
         }
 
 
+        holder.imgCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                callNumber(mValues.get(position).getPhNumber());
+
+            }
+        });
+
+        holder.timestamp.setReferenceTime(mValues.get(position).getCallDayTime().getTime());
+
+
+    }
+
+    private void callNumber(String number) {
+
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + number));
+        context.startActivity(callIntent);
     }
 
     @Override
@@ -111,7 +141,8 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
         public TfTextView txtCallLogName;
         public ImageView imgCallType;
         public ImageView imgCall;
-        public CircleImageView profileImage;
+        public DSAvatarImageView profileImage;
+        public RelativeTimeTextView timestamp;
 
         public ViewHolder(View view) {
             super(view);
@@ -119,7 +150,8 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
             txtCallLogName = (TfTextView) view.findViewById(R.id.txtCallLogName);
             imgCallType = (ImageView) view.findViewById(R.id.imgCallType);
             imgCall = (ImageView) view.findViewById(R.id.imgCallLog);
-            profileImage = (CircleImageView) view.findViewById(R.id.profile_image);
+            profileImage = (DSAvatarImageView) view.findViewById(R.id.profile_image);
+            timestamp = (RelativeTimeTextView) view.findViewById(R.id.timestamp);
 
 
         }

@@ -51,4 +51,18 @@
   <declare-styleable name="FlowLayout_Layout">
     <attr name="android:layout_gravity" />
   </declare-styleable>
+
+  <declare-styleable name="DSAvatarImageView">
+    <attr name="border" format="boolean"></attr>
+    <attr name="border_width" format="dimension"></attr>
+    <attr name="border_color" format="color"></attr>
+    <attr name="background_color" format="color"></attr>
+    <attr name="text_color" format="color"></attr>
+    <attr name="name" format="string"></attr>
+  </declare-styleable>
+
+  <declare-styleable name="Theme">
+    <attr name="avataImageViewStyle" format="reference"></attr>
+  </declare-styleable>
+
 </resources>

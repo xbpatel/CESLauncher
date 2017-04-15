@@ -98,7 +98,7 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
         super.onViewCreated(view, savedInstanceState);
 
 
-        permissionHelper = new PermissionHelper(this, new String[]{Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS}, 100);
+        permissionHelper = new PermissionHelper(this, new String[]{Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.CALL_PHONE}, 100);
 
         Log.e("Permission accepted?", "  " + isPermissionAccepted);
 
@@ -107,6 +107,7 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
         listCallLog = (RecyclerView) view.findViewById(R.id.listCallHistory);
         txtProcessPermission.setOnClickListener(permissionClick);
         setDisplayAccordingPermission();
+
 
     }
 
@@ -119,7 +120,7 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
 
     private void setDisplayAccordingPermission() {
 
-        isPermissionAccepted = permissionHelper.checkSelfPermission(new String[]{Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS});
+        isPermissionAccepted = permissionHelper.checkSelfPermission(new String[]{Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.CALL_PHONE});
 
         if (isPermissionAccepted) {
 
