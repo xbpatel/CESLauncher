@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.CallLog;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -45,7 +46,7 @@ import com.xbpsolutions.ceslauncher.helper.VerticalSpaceItemDecoration;
 import com.xbpsolutions.ceslauncher.ui.BaseFragment;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
 
-public class CallsFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class CallsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -59,7 +60,7 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
 
     private LinearLayout layoutNoPermissionLog;
     private RecyclerView listCallLog;
-    boolean isPermissionAccepted;
+    boolean isPermissionAccepted = false;
     private static final int URL_LOADER = 1;
     private boolean isDecorationAdded = false;
     private VerticalSpaceItemDecoration verticalSpaceItemDecoration;
@@ -104,7 +105,7 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
 
         permissionHelper = new PermissionHelper(this, new String[]{Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.CALL_PHONE}, 100);
 
-        Log.e("Permission accepted?", "  " + isPermissionAccepted);
+        Log.e("CallsPermissionaepted?", "" + isPermissionAccepted);
 
         txtProcessPermission = (TfTextView) view.findViewById(R.id.txtProcessPermission);
         layoutNoPermissionLog = (LinearLayout) view.findViewById(R.id.layoutNoPermissionLog);
@@ -166,6 +167,11 @@ public class CallsFragment extends BaseFragment implements LoaderManager.LoaderC
         }
     };
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        getLoaderManager().destroyLoader(URL_LOADER);
+    }
 
     public void getAllHistory() {
 

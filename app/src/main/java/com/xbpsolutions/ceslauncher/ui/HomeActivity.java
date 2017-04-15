@@ -29,6 +29,7 @@ import com.xbpsolutions.ceslauncher.tabwidget.TabBarView;
 import com.xbpsolutions.ceslauncher.tabwidget.TabBarView.IconTabProvider;
 import com.xbpsolutions.ceslauncher.ui.calls.CallsFragment;
 import com.xbpsolutions.ceslauncher.ui.home.MovieFragment;
+import com.xbpsolutions.ceslauncher.ui.messages.MessagesFragment;
 import com.xbpsolutions.ceslauncher.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
@@ -126,6 +127,8 @@ public class HomeActivity extends AppCompatActivity {
                     return new MovieFragment();
                 case 1:
                     return new CallsFragment();
+                case 2:
+                    return new MessagesFragment();
                 case 3:
                     return new SettingsFragment();
                 default:
