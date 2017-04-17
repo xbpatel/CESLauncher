@@ -170,7 +170,7 @@ public class MessagesFragment extends Fragment implements LoaderManager.LoaderCa
 
     private void setupCalls(ArrayList<MessageModel> calls) {
 
-        Log.e("Total Messages Count", " " + calls.size());
+      //  Log.e("Total Messages Count", " " + calls.size());
 
         MessageListAdapter adapter = new MessageListAdapter(getActivity(), calls);
         listMessages.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -185,7 +185,7 @@ public class MessagesFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.e("----IsUserVisibleHint", " " + isVisibleToUser);
+       // Log.e("----IsUserVisibleHint", " " + isVisibleToUser);
         if (isVisibleToUser) {
 
         }
@@ -194,7 +194,7 @@ public class MessagesFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        Log.e("Inside Loader", "On Create Loader");
+        //Log.e("Inside Loader", "On Create Loader");
 
         CursorLoader messageLoader = null;
 
@@ -218,12 +218,12 @@ public class MessagesFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor managedCursor) {
-        Log.e("Inside Loader", "On Loader Finished");
+       // Log.e("Inside Loader", "On Loader Finished");
 
         int count = managedCursor.getCount();
-        Log.e("Inside Loader", "Count " + count);
+       // Log.e("Inside Loader", "Count " + count);
 
-        Log.e("SMS", "OnLoadFinished  " + managedCursor.getCount());
+       // Log.e("SMS", "OnLoadFinished  " + managedCursor.getCount());
 
         int number = managedCursor.getColumnIndex(Telephony.Sms.Inbox.ADDRESS);
         int body = managedCursor.getColumnIndex(Telephony.Sms.Inbox.BODY);
@@ -239,7 +239,7 @@ public class MessagesFragment extends Fragment implements LoaderManager.LoaderCa
         if (managedCursor.moveToFirst()) {
             do {
 
-                Log.e("Inside While", "Prepanned");
+                //Log.e("Inside While", "Prepanned");
                 String pNumber = managedCursor.getString(number);
                 String pbody = managedCursor.getString(body);
                 String pDate = managedCursor.getString(date);
