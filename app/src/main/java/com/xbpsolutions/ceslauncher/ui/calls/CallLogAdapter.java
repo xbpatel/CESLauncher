@@ -78,7 +78,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
         int color = manipulateColor(Color.parseColor(PrefUtils.getSelectedColor(context)), 0.8f);
         holder.imgCallType.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         holder.imgCall.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        holder.timestamp.setTextColor(color);
+        holder.timestamp.setTextColor(Color.parseColor("#99ffffff"));
         holder.profileImage.setBackgroundColor(Color.parseColor(PrefUtils.getSelectedColor(context)));
         holder.profileImage.setTextColor(color);
 

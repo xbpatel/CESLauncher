@@ -1,11 +1,14 @@
 package com.xbpsolutions.ceslauncher.ui.messages;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.provider.CallLog;
+import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -50,13 +53,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
 
+        holder.txtMessageSender.setText(getContactName(context, mValues.get(position).getNumber()));
+        holder.txtMessageBody.setText(mValues.get(position).getBody());
+        int color = manipulateColor(Color.parseColor(PrefUtils.getSelectedColor(context)), 0.8f);
+        holder.imgMessageCopy.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-
 
     }
 
@@ -68,10 +75,20 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public TfTextView txtMessageSender;
+        public TfTextView txtMessageBody;
+        public ImageView imgMessageCopy;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            txtMessageBody = (TfTextView) view.findViewById(R.id.txtMessageBody);
+            txtMessageSender = (TfTextView) view.findViewById(R.id.txtMessageSender);
+            imgMessageCopy = (ImageView) view.findViewById(R.id.imgMessageCopy);
+
+            txtMessageSender.setTextColor(Color.parseColor("#ddffffff"));
+            txtMessageBody.setTextColor(Color.parseColor("#99ffffff"));
+
 
 
         }
@@ -79,6 +96,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     public static int manipulateColor(int color, float factor) {
+
         int a = Color.alpha(color);
         int r = Math.round(Color.red(color) * factor);
         int g = Math.round(Color.green(color) * factor);
@@ -89,5 +107,25 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
                 Math.min(b, 255));
     }
 
+
+    public String getContactName(Context context, String phoneNumber) {
+        ContentResolver cr = context.getContentResolver();
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(phoneNumber));
+        Cursor cursor = cr.query(uri,
+                new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        String contactName = phoneNumber;
+        if (cursor.moveToFirst()) {
+            contactName = cursor.getString(cursor
+                    .getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        return contactName;
+    }
 
 }

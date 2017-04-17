@@ -2,7 +2,6 @@ package com.xbpsolutions.ceslauncher.ui.calls;
 
 
 import android.Manifest;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -13,26 +12,15 @@ import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.app.Activity;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.provider.CallLog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Html;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Date;
-
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +31,10 @@ import android.widget.Toast;
 import com.xbpsolutions.ceslauncher.R;
 import com.xbpsolutions.ceslauncher.helper.PermissionHelper;
 import com.xbpsolutions.ceslauncher.helper.VerticalSpaceItemDecoration;
-import com.xbpsolutions.ceslauncher.ui.BaseFragment;
 import com.xbpsolutions.ceslauncher.ui.widgets.TfTextView;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class CallsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -112,6 +102,7 @@ public class CallsFragment extends Fragment implements LoaderManager.LoaderCallb
         listCallLog = (RecyclerView) view.findViewById(R.id.listCallHistory);
         txtProcessPermission.setOnClickListener(permissionClick);
         setDisplayAccordingPermission();
+        getAllHistory();
 
 
     }
@@ -119,22 +110,45 @@ public class CallsFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onResume() {
         super.onResume();
-        getLoaderManager().restartLoader(URL_LOADER, null, this);
+
+
+        TelephonyManager telephonyManager;
+        PhoneStateListener listener;
+// Get the telephony manager
+        telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+
+        // Create a new PhoneStateListener
+        listener = new PhoneStateListener() {
+            @Override
+            public void onCallStateChanged(int state, String incomingNumber) {
+                String stateString = "N/A";
+                switch (state) {
+                    case TelephonyManager.CALL_STATE_IDLE:
+                        stateString = "Idle";
+                       // getActivity().getSupportLoaderManager().restartLoader(URL_LOADER, null, CallsFragment.this);
+                        break;
+                }
+
+            }
+        };
+
+        // Register the listener with the telephony manager
+        telephonyManager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
+
 
     }
+
 
     private void setDisplayAccordingPermission() {
 
         isPermissionAccepted = permissionHelper.checkSelfPermission(new String[]{Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.CALL_PHONE});
 
         if (isPermissionAccepted) {
-
             layoutNoPermissionLog.setVisibility(View.GONE);
             listCallLog.setVisibility(View.VISIBLE);
             getAllHistory();
 
         } else {
-
             layoutNoPermissionLog.setVisibility(View.VISIBLE);
             listCallLog.setVisibility(View.GONE);
         }
@@ -170,12 +184,12 @@ public class CallsFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onStop() {
         super.onStop();
-        getLoaderManager().destroyLoader(URL_LOADER);
+        getActivity().getSupportLoaderManager().destroyLoader(URL_LOADER);
     }
 
     public void getAllHistory() {
 
-        getLoaderManager().initLoader(URL_LOADER, null, this);
+        getActivity().getSupportLoaderManager().initLoader(URL_LOADER, null, this);
 
     }
 
@@ -189,10 +203,13 @@ public class CallsFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        CursorLoader callLoder = null;
+
         switch (id) {
             case URL_LOADER:
                 // Returns a new CursorLoader
-                return new CursorLoader(
+                callLoder = new CursorLoader(
                         getActivity(),   // Parent activity context
                         CallLog.Calls.CONTENT_URI,        // Table to query
                         null,     // Projection to return
@@ -200,9 +217,12 @@ public class CallsFragment extends Fragment implements LoaderManager.LoaderCallb
                         null,            // No selection arguments
                         android.provider.CallLog.Calls.DEFAULT_SORT_ORDER             // Default sort order
                 );
-            default:
-                return null;
+
+                break;
+
         }
+
+        return callLoder;
     }
 
     @Override
@@ -269,7 +289,7 @@ public class CallsFragment extends Fragment implements LoaderManager.LoaderCallb
             }
 
         }
-        //managedCursor.close();
+        managedCursor.close();
 
         setupCalls(calls);
 

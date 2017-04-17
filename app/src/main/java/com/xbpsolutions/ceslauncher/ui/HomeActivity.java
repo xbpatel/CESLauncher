@@ -1,7 +1,5 @@
 package com.xbpsolutions.ceslauncher.ui;
 
-import static com.xbpsolutions.ceslauncher.helper.PrefUtils.getSelectedColor;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Color;
@@ -14,7 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -34,6 +32,8 @@ import com.xbpsolutions.ceslauncher.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static com.xbpsolutions.ceslauncher.helper.PrefUtils.getSelectedColor;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -74,8 +74,11 @@ public class HomeActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(1);
 
         tabBarView.setViewPager(mViewPager);
+
+
     }
 
     @Override

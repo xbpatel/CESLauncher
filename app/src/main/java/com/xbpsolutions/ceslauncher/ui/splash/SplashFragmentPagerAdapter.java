@@ -14,9 +14,6 @@ import com.xbpsolutions.ceslauncher.ui.widgets.EnchantedViewPager;
 
 import java.util.ArrayList;
 
-/**
- * Created by dhruvil on 06-03-2017.
- */
 
 public class SplashFragmentPagerAdapter extends PagerAdapter {
 
@@ -44,10 +41,9 @@ public class SplashFragmentPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.introview, null, false);
         layout.setTag(EnchantedViewPager.ENCHANTED_VIEWPAGER_POSITION + position);
-
         setupLayout(layout, position);
-
         container.addView(layout);
+
 
 
         return layout;
